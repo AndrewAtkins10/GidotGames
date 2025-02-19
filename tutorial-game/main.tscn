@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://bbli6bqyd4cdl"]
+[gd_scene load_steps=11 format=3 uid="uid://bbli6bqyd4cdl"]
 
 [ext_resource type="Script" path="res://main.gd" id="1_bibpb"]
 [ext_resource type="PackedScene" uid="uid://2dukdy6xneie" path="res://player.tscn" id="1_u48ex"]
@@ -6,6 +6,23 @@
 [ext_resource type="PackedScene" uid="uid://doo1q33nkoo41" path="res://hud.tscn" id="3_giw3a"]
 [ext_resource type="AudioStream" uid="uid://b2xivek0vxefn" path="res://art/House In a Forest Loop.ogg" id="5_yogve"]
 [ext_resource type="AudioStream" uid="uid://xfp6kdxha5na" path="res://art/gameover.wav" id="6_gkl5s"]
+[ext_resource type="Shader" path="res://art/starfield_shader_v5.gdshader" id="7_pfv6o"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_c6hwx"]
+shader = ExtResource("7_pfv6o")
+shader_parameter/dimensions = Vector2(1024, 600)
+shader_parameter/small_stars = 50.0
+shader_parameter/small_stars_far_size = 0.5
+shader_parameter/small_stars_near_size = 1.0
+shader_parameter/large_stars = 8.0
+shader_parameter/large_stars_far_size = 0.5
+shader_parameter/large_stars_near_size = 1.0
+shader_parameter/far_stars_color = Color(0.5, 0, 1, 1)
+shader_parameter/near_stars_color = Color(1, 1, 1, 1)
+shader_parameter/base_scroll_speed = 0.05
+shader_parameter/additional_scroll_speed = 0.05
+
+[sub_resource type="AnimatedTexture" id="AnimatedTexture_duoy7"]
 
 [sub_resource type="Curve2D" id="Curve2D_doant"]
 _data = {
@@ -17,10 +34,11 @@ point_count = 5
 script = ExtResource("1_bibpb")
 mob_scene = ExtResource("2_jn4qa")
 
-[node name="ColorRect" type="ColorRect" parent="."]
+[node name="TextureRect" type="TextureRect" parent="."]
+material = SubResource("ShaderMaterial_c6hwx")
 offset_right = 480.0
 offset_bottom = 720.0
-color = Color(0.4934, 0.00143661, 0.682451, 1)
+texture = SubResource("AnimatedTexture_duoy7")
 
 [node name="Player" parent="." instance=ExtResource("1_u48ex")]
 visible = false

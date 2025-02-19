@@ -4,7 +4,8 @@ extends Node
 var score
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-		$Player.hit.connect(_on_Player_hit)
+	add_to_group("game")
+	$Player.hit.connect(_on_Player_hit)
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -12,6 +13,7 @@ func _process(delta: float) -> void:
 	pass
 	
 func game_over():
+	$HUD/highScore.show()
 	$Music.stop()
 	$DeathSound.play()
 	$ScoreTimer.stop()
@@ -21,6 +23,12 @@ func game_over():
 
 func new_game():
 	score=0
+	$HUD/hearts.current_health = $HUD/hearts.max_health
+	$HUD/hearts.redraw_hearts()
+	$HUD/hearts.current_health = $HUD/hearts.max_health
+	$HUD/hearts.redraw_hearts()
+	$HUD/highScore.hide() 
+
 	get_tree().call_group("mobs","queue_free")
 	$Music.play()
 	$HUD.update_score(score)
@@ -53,4 +61,5 @@ func _on_start_timer_timeout() -> void:
 	$MobTimer.start()
 	$ScoreTimer.start()
 func _on_Player_hit():
-	game_over()
+	var health_ui = get_node("HUD/hearts")
+	health_ui.update_health(health_ui.current_health-1)

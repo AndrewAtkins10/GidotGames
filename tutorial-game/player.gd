@@ -4,7 +4,7 @@ extends Area2D
 var screen_size
 
 signal hit
-
+var count = 0
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	screen_size = get_viewport_rect().size
@@ -42,10 +42,16 @@ func _process(delta: float) -> void:
 
 
 func _on_body_entered(body: Node2D) -> void:
-	hide()
-	hit.emit()
-	$CollisionShape2D.set_deferred("disabled",true)
-	
+	count+=1
+	if count==3:
+		hide()
+		hit.emit()
+		$CollisionShape2D.set_deferred("disabled",true)
+		$hitSound.play()
+		count=0
+	else:
+		hit.emit()
+		$hitSound.play()
 func start(pos):
 	position=pos
 	show()
