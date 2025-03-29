@@ -1,0 +1,25 @@
+[gd_scene load_steps=5 format=3 uid="uid://r4n4srfmedws"]
+
+[ext_resource type="Shader" path="res://enemy.gdshader" id="1_dthp0"]
+[ext_resource type="Texture2D" uid="uid://dw4rwfxdsilcy" path="res://icon.svg" id="1_knjvk"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_fcioh"]
+shader = ExtResource("1_dthp0")
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_nu6cw"]
+size = Vector2(122, 114)
+
+[node name="Enemy" type="CharacterBody2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_fcioh")
+position = Vector2(-1, -112)
+texture = ExtResource("1_knjvk")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-1, -102)
+shape = SubResource("RectangleShape2D_nu6cw")
+
+[node name="RayCast2D" type="RayCast2D" parent="."]
+position = Vector2(-24, -30)
+target_position = Vector2(0, -2)
